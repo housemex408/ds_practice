@@ -18,8 +18,3 @@ df.boxplot(column='FEDERAL_REVENUE')
 
 #%%
 df.boxplot(column='FEDERAL_REVENUE', by = 'STATE')
-
-#%%
-
-
-#%%
