@@ -85,3 +85,29 @@ support.amount.sum() / merged.amount.sum()
 
 #%%
 #Sorting
+merged.sort_values("amount")
+
+#%%
+merged.sort_values("amount", ascending=False)
+
+#%%
+merged.sort_values("amount", ascending=False).head()
+
+#%%
+support.sort_values("amount", ascending=False).head()
+
+#%%
+oppose.sort_values("amount", ascending=False).head()
+
+#%%
+#Group By
+merged.groupby("committee_name_x").amount.sum()
+
+#%%
+merged.groupby("committee_name_x").amount.sum().reset_index()
+
+#%%
+merged.groupby("committee_name_x").amount.sum().reset_index().sort_values("amount", ascending=False)
+
+#%%
+#Group By multiple fields
