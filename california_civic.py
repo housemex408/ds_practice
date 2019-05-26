@@ -1,7 +1,7 @@
 
 #%%
 from pandas import pandas as pd
-
+%matplotlib inline
 
 #%%
 dsPath = '/Users/housemex408/Google Drive/GWU/D.Eng/Praxis & Guidelines/Data Analysis/Datasets/California Civic/'
@@ -115,5 +115,43 @@ merged.groupby(["contributor_firstname", "contributor_lastname"]).amount.sum().r
 
 #%%
 merged.groupby(["contributor_firstname", "contributor_lastname", "committee_position"]).amount.sum().reset_index().sort_values("amount", ascending=False)
+
+#%%
+#Charts
+top_supporters = support.groupby(
+    ["contributor_firstname", "contributor_lastname"]
+).amount.sum().reset_index().sort_values("amount", ascending=False).head(10)
+
+#%%
+top_supporters.head(10)
+
+#%%
+top_supporters.amount.plot.bar()
+
+#%%
+chart = top_supporters.head(5).amount.plot.barh()
+chart.set_yticklabels(top_supporters.contributor_lastname) 
+
+#%%
+top_supporters['contributor_fullname'] = top_supporters.contributor_firstname + " " + top_supporters.contributor_lastname
+top_supporters.head()
+
+#%%
+chart = top_supporters.head(5).amount.plot.barh()
+chart.set_yticklabels(top_supporters.contributor_fullname)
+
+#%%
+def combine_names(row):
+    if row.contributor_fullname.startswith('SEAN PARKER'):
+        return 'SEAN PARKER'
+    return row.contributor_fullname
+
+#%%
+top_supporters['contributor_cleanname'] = top_supporters.apply(combine_names, axis=1)
+
+#%%
+top_supporters.groupby(
+    "contributor_cleanname"
+).amount.sum().reset_index().sort_values("amount", ascending=False).head(10)
 
 #%%
