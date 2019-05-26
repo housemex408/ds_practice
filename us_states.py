@@ -5,10 +5,7 @@ import pandas as pd
 #%%
 df = pd.read_csv('../Datasets/us-education-datasets-unification-project/states_all.csv', delimiter = ',')
 #%%
-df.head(10)
-#%%
-##df.describe()
-
+df.head(10)[['FEDERAL_REVENUE', 'STATE']]
 
 #%%
 df['FEDERAL_REVENUE'].hist(bins=50)
