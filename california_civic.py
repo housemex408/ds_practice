@@ -111,3 +111,9 @@ merged.groupby("committee_name_x").amount.sum().reset_index().sort_values("amoun
 
 #%%
 #Group By multiple fields
+merged.groupby(["contributor_firstname", "contributor_lastname"]).amount.sum().reset_index().sort_values("amount", ascending=False)
+
+#%%
+merged.groupby(["contributor_firstname", "contributor_lastname", "committee_position"]).amount.sum().reset_index().sort_values("amount", ascending=False)
+
+#%%
