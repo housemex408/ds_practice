@@ -20,33 +20,39 @@ weather = pd.read_csv(dsPath + 'Weather.csv', delimiter = ',')
 X = weather['MinTemp'].values.reshape(-1,1)
 y = weather['MaxTemp'].values.reshape(-1,1)
 
-#%%
-#Next, we split 80% of the data to training set while 20% of the data to test set using below code.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
-
-#%%
-#Now lets train our model
-regressor = LinearRegression()  
-model = regressor.fit(X_train, y_train)
-
-#%%
-#To see what coefficients our regression model has chosen, execute the following script:
-#print('Coefficients: \n', regressor.coef_)
-r_sq = model.score(X_train, y_train)
-
-#%%
-#Predict the response
-y_pred = model.predict(X_train)
-
-#%%
-plt.scatter(X_train, y_train)
+# Does there appear to be a relationship?
+plt.scatter(X, y)
 plt.title('MinTemp vs MaxTemp')  
 plt.xlabel('MinTemp')  
 plt.ylabel('MaxTemp')  
-plt.plot(X_train, y_pred, color='red')
+plt.plot(X, y)
 plt.show()
 #%%
+#Now lets train our model
+regressor = LinearRegression()  
+model = regressor.fit(X, y)
+
+#%%
+#To see what coefficients our regression model has chosen, execute the following script:
+r_sq = model.score(X, y)
+
+#%%
+#Predict the response
+y_pred = model.predict(X)
+
+#%%
+#Plot X and predicted Y line
+plt.scatter(X, y)
+plt.title('MinTemp vs MaxTemp')  
+plt.xlabel('MinTemp')  
+plt.ylabel('MaxTemp')  
+plt.plot(X, y_pred, color='red')
+plt.show()
+#%%
+#Print out statistics
 print('predicted response:', y_pred, sep='\n')
 print('coefficient of determination:', r_sq)
 print('intercept:', model.intercept_)
 print('slope:', model.coef_)
+
+#%%
