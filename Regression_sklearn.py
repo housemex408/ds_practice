@@ -22,11 +22,20 @@ y = weather['MaxTemp'].values.reshape(-1,1)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
+#%%
 # Does there appear to be a relationship?
-plt.scatter(X_train, y_train)
-plt.title('MinTemp vs MaxTemp')  
-plt.xlabel('MinTemp')  
-plt.ylabel('MaxTemp')  
+# Do MinTemp & MaxTemp follow a normal distribution?
+# https://seaborn.pydata.org/tutorial/distributions.html
+sns.jointplot(x="MinTemp", y="MaxTemp", data=weather);
+
+#%%
+# Are there outliers?
+plt.boxplot(X)
+plt.title('MinTemp')  
+plt.show()
+
+plt.boxplot(y)
+plt.title('MaxTemp')  
 plt.show()
 #%%
 #Now lets train our model
@@ -50,6 +59,8 @@ print('slope:', model.coef_)
 print('Mean Absolute Error:', metrics.mean_absolute_error(y_test, y_pred))  
 print('Mean Squared Error:', metrics.mean_squared_error(y_test, y_pred))  
 print('Root Mean Squared Error:', np.sqrt(metrics.mean_squared_error(y_test, y_pred)))
+
+
 
 
 #%%
