@@ -15,16 +15,13 @@ dsPath = '/Users/housemex408/Google Drive/GWU/D.Eng/Praxis & Guidelines/Data Ana
 # %%
 #Reading in data
 df = pd.read_csv(dsPath + 'delivery_fleet.txt', delimiter='\t')
-df.head(5)
 
 f1 = df['Distance_Feature'].values
 f2 = df['Speeding_Feature'].values
 # %%
 # populate into list and plot:  https://www.w3schools.com/python/python_lists.asp
 length = len(f1)
-dataList = []
 for i in range(length):
-    dataList.append([f1[i], f2[i]])
     plt.scatter(f1[i], f2[i])
 plt.xlabel('distance')
 plt.ylabel('speeding')
@@ -34,8 +31,8 @@ plt.show()
 #print("datalist:", dataList)
 
 # %%
-X = np.array(dataList)
-kmeans = KMeans(n_clusters=2)
+X = np.array(list(zip(f1, f2)))
+kmeans = KMeans(n_clusters=4, init='k-means++', random_state=42)
 kmeans.fit(X)
 
 centroids = kmeans.cluster_centers_
@@ -45,7 +42,7 @@ print(centroids)
 print(labels)
 
 # %%
-colors = ["g.", "y."]
+colors = ["g.", "y.", "b.", "m."]
 
 for i in range(len(X)):
     print("coordinate:", X[i], "label:",
@@ -63,5 +60,18 @@ plt.ylabel('speeding')
 plt.title('Distance ~ Speeding')
 plt.show()
 
+
+# %%
+# Generating elbow: https://medium.com/machine-learning-algorithms-from-scratch/k-means-clustering-from-scratch-in-python-1675d38eee42
+wcss = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i, init='k-means++', random_state=42)
+    kmeans.fit(X)
+    wcss.append(kmeans.inertia_)
+plt.plot(range(1, 11), wcss)
+plt.title('The Elbow Method')
+plt.xlabel('Number of clusters')
+plt.ylabel('WCSS')
+plt.show()
 
 # %%
